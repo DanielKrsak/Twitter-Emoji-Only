@@ -12,6 +12,7 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
 import { PageLayout } from "~/components/layout";
+import { PostView } from "~/components/postview";
 
 const CreatePostWizard = () => {
   const { user } = useUser();
@@ -42,8 +43,8 @@ const CreatePostWizard = () => {
   return (
     <div className="flex w-full gap-3">
       <Image
-        src={user.profileImageUrl}
         alt="Profile Image"
+        src={user.profileImageUrl}
         className="rounded-full"
         height={56}
         width={56}
@@ -74,37 +75,6 @@ const CreatePostWizard = () => {
           <LoadingSpinner size={20} />
         </div>
       )}
-    </div>
-  );
-};
-
-type PostWithUser = RouterOutputs["posts"]["getAll"][number];
-
-const PostView = (props: PostWithUser) => {
-  const { post, author } = props;
-
-  return (
-    <div key={post.id} className="flex gap-3 border-b border-slate-400 p-4">
-      <Image
-        src={author.profilePicture}
-        alt="Profile Image"
-        className="rounded-full"
-        height={56}
-        width={56}
-      />
-      <div className="flex flex-col">
-        <div className="flex gap-1 text-slate-300">
-          <Link href={`/@${author.username}`}>
-            <span>{`@${author.username}`}</span>
-          </Link>
-          <Link href={`/post/${post.id}`}>
-            <span className="font-thin">{` · ${dayjs(
-              post.createdAt
-            ).fromNow()}`}</span>
-          </Link>
-        </div>
-        <span className="text-2xl">{post.content}</span>
-      </div>
     </div>
   );
 };
